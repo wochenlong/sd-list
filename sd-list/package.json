@@ -1,0 +1,21 @@
+{
+  "name": "koishi-plugin-sd-list",
+  "description": "获取ai绘画的模型、vae、pt和lora列表",
+  "version": "0.0.1",
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
+  "files": [
+    "lib",
+    "dist"
+  ],
+  "license": "MIT",
+  "scripts": {},
+  "keywords": [
+    "chatbot",
+    "koishi",
+    "plugin"
+  ],
+  "peerDependencies": {
+    "koishi": "4.12.0"
+  }
+}
