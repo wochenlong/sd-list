@@ -14,6 +14,7 @@ export const usage = `
 export interface Config {
   endpoint?: string;
   folderPath?: string;
+  loraweights?: number;
 }
 
 export const Config: Schema<Config> = Schema.object({
@@ -21,6 +22,12 @@ export const Config: Schema<Config> = Schema.object({
     .description("SD-WebUI 服务器地址。")
     .default("http://127.0.0.1:7860"),
   folderPath: Schema.string().description("本地的lora文件夹路径。").default(""),
+  loraweights: Schema.number()
+    .description("输出lora的默认权重")
+    .min(0)
+    .max(2)
+    .step(0.1)
+    .default(0.6),
 });
 
 const logger = new Logger(name);
@@ -88,16 +95,18 @@ export function apply(ctx: Context, config: Config) {
     .command("查看lora", "输出lora文件夹下的模型名称")
     .action(async ({ session }) => {
       const folderPath = config.folderPath;
+      const loraweights = config.loraweights;
 
       try {
         // 读取文件夹中所有文件的文件名
         const files = await fs.promises.readdir(folderPath);
-        // 对每个文件名进行处理，去掉后缀名并添加序号
+        // 对每个文件名进行处理，添加序号和<lora:>标记
         const fileList = files.map(
-          (file, i) => `${i + 1}. ${path.parse(file).name}`
+          (file, i) =>
+            `\n${i + 1}. <lora:${path.parse(file).name}:${loraweights}>`
         );
         // 将文件名列表发送到会话中
-        session.send(`lora列表：\n${fileList.join("\n")}`);
+        session.send(`lora列表：\n${fileList.join("\u200B\n")}`);
       } catch (err) {
         // 如果读取文件列表失败，则发送错误消息
         session.send(`读取文件夹 ${folderPath} 失败`);
