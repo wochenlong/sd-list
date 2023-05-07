@@ -1,7 +1,7 @@
 {
   "name": "koishi-plugin-sd-list",
   "description": "获取ai绘画的模型、vae、pt和lora列表",
-  "version": "0.0.1",
+  "version": "0.5.3",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "files": [
@@ -16,6 +16,13 @@
     "plugin"
   ],
   "peerDependencies": {
-    "koishi": "4.12.0"
+    "koishi": "^4.12.0"
+  },
+  "koishi": {
+    "service": {
+      "optional": [
+        "puppeteer"
+      ]
+    }
   }
 }
