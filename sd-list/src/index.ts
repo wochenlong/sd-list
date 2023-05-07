@@ -103,7 +103,7 @@ export function apply(ctx: Context, config: Config) {
         // 对每个文件名进行处理，添加序号和<lora:>标记
         const fileList = files.map(
           (file, i) =>
-            `\n${i + 1}. <lora:${path.parse(file).name}:${loraweights}>`
+            `${i + 1}. <lora:${path.parse(file).name}:${loraweights}>`
         );
         // 将文件名列表发送到会话中
         session.send(`lora列表：\n${fileList.join("\u200B\n")}`);
